@@ -29,7 +29,7 @@ library
                     Data.MessagePack.Put
 
   -- Unsupported extension: OverloadedLists
-  build-depends:    base                 >=4.7 && <5
+  build-depends:    base                 >=4.6 && <5
                   , mtl                  >=2.2
                   , bytestring           >=0.10
                   , text                 >=1.2
@@ -51,7 +51,7 @@ test-suite msgpack-tests
 
   build-depends:    base
                   , bytestring
-                  , QuickCheck           >=2.8
+                  , QuickCheck           >=2.7
                   , tasty                >=0.10
                   , tasty-quickcheck     >=0.8
                   , msgpack

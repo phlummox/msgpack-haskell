@@ -2,8 +2,9 @@
 {-# LANGUAGE FlexibleInstances    #-}
 {-# LANGUAGE IncoherentInstances  #-}
 {-# LANGUAGE LambdaCase           #-}
-{-# LANGUAGE OverloadedLists      #-}
+-- { - # LANGUAGE OverloadedLists      #-}
 {-# LANGUAGE TypeSynonymInstances #-}
+{-# LANGUAGE ViewPatterns #-}
 
 --------------------------------------------------------------------
 -- |
@@ -234,41 +235,41 @@ instance (MessagePack k, MessagePack v, Hashable k, Eq k) => MessagePack (HashMa
 -- tuples
 
 instance (MessagePack a1, MessagePack a2) => MessagePack (a1, a2) where
-  toObject (a1, a2) = ObjectArray [toObject a1, toObject a2]
-  fromObject (ObjectArray [a1, a2]) = (,) <$> fromObject a1 <*> fromObject a2
+  toObject (a1, a2) = ObjectArray $ V.fromList [toObject a1, toObject a2]
+  fromObject (ObjectArray (V.toList -> [a1, a2])) = (,) <$> fromObject a1 <*> fromObject a2
   fromObject _ = Nothing
 
 instance (MessagePack a1, MessagePack a2, MessagePack a3) => MessagePack (a1, a2, a3) where
-  toObject (a1, a2, a3) = ObjectArray [toObject a1, toObject a2, toObject a3]
-  fromObject (ObjectArray [a1, a2, a3]) = (,,) <$> fromObject a1 <*> fromObject a2 <*> fromObject a3
+  toObject (a1, a2, a3) = ObjectArray $ V.fromList [toObject a1, toObject a2, toObject a3]
+  fromObject (ObjectArray (V.toList -> [a1, a2, a3])) = (,,) <$> fromObject a1 <*> fromObject a2 <*> fromObject a3
   fromObject _ = Nothing
 
 instance (MessagePack a1, MessagePack a2, MessagePack a3, MessagePack a4) => MessagePack (a1, a2, a3, a4) where
-  toObject (a1, a2, a3, a4) = ObjectArray [toObject a1, toObject a2, toObject a3, toObject a4]
-  fromObject (ObjectArray [a1, a2, a3, a4]) = (,,,) <$> fromObject a1 <*> fromObject a2 <*> fromObject a3 <*> fromObject a4
+  toObject (a1, a2, a3, a4) = ObjectArray $ V.fromList [toObject a1, toObject a2, toObject a3, toObject a4]
+  fromObject (ObjectArray (V.toList -> [a1, a2, a3, a4])) = (,,,) <$> fromObject a1 <*> fromObject a2 <*> fromObject a3 <*> fromObject a4
   fromObject _ = Nothing
 
 instance (MessagePack a1, MessagePack a2, MessagePack a3, MessagePack a4, MessagePack a5) => MessagePack (a1, a2, a3, a4, a5) where
-  toObject (a1, a2, a3, a4, a5) = ObjectArray [toObject a1, toObject a2, toObject a3, toObject a4, toObject a5]
-  fromObject (ObjectArray [a1, a2, a3, a4, a5]) = (,,,,) <$> fromObject a1 <*> fromObject a2 <*> fromObject a3 <*> fromObject a4 <*> fromObject a5
+  toObject (a1, a2, a3, a4, a5) = ObjectArray $ V.fromList [toObject a1, toObject a2, toObject a3, toObject a4, toObject a5]
+  fromObject (ObjectArray (V.toList -> [a1, a2, a3, a4, a5])) = (,,,,) <$> fromObject a1 <*> fromObject a2 <*> fromObject a3 <*> fromObject a4 <*> fromObject a5
   fromObject _ = Nothing
 
 instance (MessagePack a1, MessagePack a2, MessagePack a3, MessagePack a4, MessagePack a5, MessagePack a6) => MessagePack (a1, a2, a3, a4, a5, a6) where
-  toObject (a1, a2, a3, a4, a5, a6) = ObjectArray [toObject a1, toObject a2, toObject a3, toObject a4, toObject a5, toObject a6]
-  fromObject (ObjectArray [a1, a2, a3, a4, a5, a6]) = (,,,,,) <$> fromObject a1 <*> fromObject a2 <*> fromObject a3 <*> fromObject a4 <*> fromObject a5 <*> fromObject a6
+  toObject (a1, a2, a3, a4, a5, a6) = ObjectArray $ V.fromList [toObject a1, toObject a2, toObject a3, toObject a4, toObject a5, toObject a6]
+  fromObject (ObjectArray (V.toList -> [a1, a2, a3, a4, a5, a6])) = (,,,,,) <$> fromObject a1 <*> fromObject a2 <*> fromObject a3 <*> fromObject a4 <*> fromObject a5 <*> fromObject a6
   fromObject _ = Nothing
 
 instance (MessagePack a1, MessagePack a2, MessagePack a3, MessagePack a4, MessagePack a5, MessagePack a6, MessagePack a7) => MessagePack (a1, a2, a3, a4, a5, a6, a7) where
-  toObject (a1, a2, a3, a4, a5, a6, a7) = ObjectArray [toObject a1, toObject a2, toObject a3, toObject a4, toObject a5, toObject a6, toObject a7]
-  fromObject (ObjectArray [a1, a2, a3, a4, a5, a6, a7]) = (,,,,,,) <$> fromObject a1 <*> fromObject a2 <*> fromObject a3 <*> fromObject a4 <*> fromObject a5 <*> fromObject a6 <*> fromObject a7
+  toObject (a1, a2, a3, a4, a5, a6, a7) = ObjectArray $ V.fromList [toObject a1, toObject a2, toObject a3, toObject a4, toObject a5, toObject a6, toObject a7]
+  fromObject (ObjectArray (V.toList -> [a1, a2, a3, a4, a5, a6, a7])) = (,,,,,,) <$> fromObject a1 <*> fromObject a2 <*> fromObject a3 <*> fromObject a4 <*> fromObject a5 <*> fromObject a6 <*> fromObject a7
   fromObject _ = Nothing
 
 instance (MessagePack a1, MessagePack a2, MessagePack a3, MessagePack a4, MessagePack a5, MessagePack a6, MessagePack a7, MessagePack a8) => MessagePack (a1, a2, a3, a4, a5, a6, a7, a8) where
-  toObject (a1, a2, a3, a4, a5, a6, a7, a8) = ObjectArray [toObject a1, toObject a2, toObject a3, toObject a4, toObject a5, toObject a6, toObject a7, toObject a8]
-  fromObject (ObjectArray [a1, a2, a3, a4, a5, a6, a7, a8]) = (,,,,,,,) <$> fromObject a1 <*> fromObject a2 <*> fromObject a3 <*> fromObject a4 <*> fromObject a5 <*> fromObject a6 <*> fromObject a7 <*> fromObject a8
+  toObject (a1, a2, a3, a4, a5, a6, a7, a8) = ObjectArray $ V.fromList [toObject a1, toObject a2, toObject a3, toObject a4, toObject a5, toObject a6, toObject a7, toObject a8]
+  fromObject (ObjectArray (V.toList -> [a1, a2, a3, a4, a5, a6, a7, a8])) = (,,,,,,,) <$> fromObject a1 <*> fromObject a2 <*> fromObject a3 <*> fromObject a4 <*> fromObject a5 <*> fromObject a6 <*> fromObject a7 <*> fromObject a8
   fromObject _ = Nothing
 
 instance (MessagePack a1, MessagePack a2, MessagePack a3, MessagePack a4, MessagePack a5, MessagePack a6, MessagePack a7, MessagePack a8, MessagePack a9) => MessagePack (a1, a2, a3, a4, a5, a6, a7, a8, a9) where
-  toObject (a1, a2, a3, a4, a5, a6, a7, a8, a9) = ObjectArray [toObject a1, toObject a2, toObject a3, toObject a4, toObject a5, toObject a6, toObject a7, toObject a8, toObject a9]
-  fromObject (ObjectArray [a1, a2, a3, a4, a5, a6, a7, a8, a9]) = (,,,,,,,,) <$> fromObject a1 <*> fromObject a2 <*> fromObject a3 <*> fromObject a4 <*> fromObject a5 <*> fromObject a6 <*> fromObject a7 <*> fromObject a8 <*> fromObject a9
+  toObject (a1, a2, a3, a4, a5, a6, a7, a8, a9) = ObjectArray $ V.fromList [toObject a1, toObject a2, toObject a3, toObject a4, toObject a5, toObject a6, toObject a7, toObject a8, toObject a9]
+  fromObject (ObjectArray (V.toList -> [a1, a2, a3, a4, a5, a6, a7, a8, a9])) = (,,,,,,,,) <$> fromObject a1 <*> fromObject a2 <*> fromObject a3 <*> fromObject a4 <*> fromObject a5 <*> fromObject a6 <*> fromObject a7 <*> fromObject a8 <*> fromObject a9
   fromObject _ = Nothing
